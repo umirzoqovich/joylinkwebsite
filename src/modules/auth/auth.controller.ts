@@ -21,6 +21,12 @@ export class AuthController {
     return this.authService.login(dto);
   }
 
+  /** Adminlarni yaratish / tiklash */
+  @Get('setup')
+  setup() {
+    return this.authService.setupInitialAdmin();
+  }
+
   /** Joriy admin ma'lumotlari */
   @Get('me')
   @UseGuards(JwtAuthGuard)
