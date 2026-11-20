@@ -15,7 +15,11 @@ async function bootstrap() {
 
   app.setGlobalPrefix('api');
   app.use(helmet({ crossOriginResourcePolicy: { policy: 'cross-origin' } }));
-  app.enableCors({ origin: config.getOrThrow<string[]>('corsOrigins'), credentials: true });
+  const corsOrigins = config.getOrThrow<string[]>('corsOrigins');
+  app.enableCors({
+    origin: corsOrigins.includes('*') ? true : corsOrigins,
+    credentials: true,
+  });
 
   app.useGlobalPipes(
     new ValidationPipe({
@@ -37,7 +41,7 @@ async function bootstrap() {
   SwaggerModule.setup('api/docs', app, SwaggerModule.createDocument(app, swaggerConfig));
 
   const port = config.getOrThrow<number>('port');
-  await app.listen(port);
+  await app.listen(port, '0.0.0.0');
 
   Logger.log(`🚀 API: http://localhost:${port}/api`, 'Bootstrap');
   Logger.log(`📚 Swagger: http://localhost:${port}/api/docs`, 'Bootstrap');
