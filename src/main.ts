@@ -40,6 +40,10 @@ async function bootstrap() {
     .build();
   SwaggerModule.setup('api/docs', app, SwaggerModule.createDocument(app, swaggerConfig));
 
+  app.getHttpAdapter().get('/', (_req: unknown, res: { redirect: (url: string) => void }) => {
+    res.redirect('/api/docs');
+  });
+
   const port = config.getOrThrow<number>('port');
   await app.listen(port, '0.0.0.0');
 
