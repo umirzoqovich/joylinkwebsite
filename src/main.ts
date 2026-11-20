@@ -15,9 +15,11 @@ async function bootstrap() {
 
   app.setGlobalPrefix('api');
   app.use(helmet({ crossOriginResourcePolicy: { policy: 'cross-origin' } }));
-  const corsOrigins = config.getOrThrow<string[]>('corsOrigins');
   app.enableCors({
-    origin: corsOrigins.includes('*') ? true : corsOrigins,
+    origin: (origin, callback) => {
+      // Barcha domenlardan (jumladan joylinks-fronted.mcweb.uz va localhost) so'rovlarga ruxsat berish
+      callback(null, true);
+    },
     credentials: true,
   });
 

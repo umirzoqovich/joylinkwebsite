@@ -21,7 +21,7 @@ export function validateEnv(env: Record<string, unknown>) {
 export default (): AppConfig => ({
   port: Number(process.env.PORT ?? 4000),
   nodeEnv: process.env.NODE_ENV ?? 'development',
-  corsOrigins: (process.env.CORS_ORIGINS ?? 'http://localhost:3000,http://127.0.0.1:3000')
+  corsOrigins: (process.env.CORS_ORIGINS ?? 'http://localhost:3000,http://127.0.0.1:3000,https://joylinks-fronted.mcweb.uz')
     .split(',')
     .map((origin) => origin.trim())
     .filter(Boolean),
