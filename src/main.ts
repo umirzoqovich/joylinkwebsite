@@ -40,7 +40,8 @@ async function bootstrap() {
     .build();
   SwaggerModule.setup('api/docs', app, SwaggerModule.createDocument(app, swaggerConfig));
 
-  app.getHttpAdapter().get('/', (_req: unknown, res: { redirect: (url: string) => void }) => {
+  // eslint-disable-next-line @typescript-eslint/no-explicit-any
+  app.getHttpAdapter().get('/', (_req: any, res: any) => {
     res.redirect('/api/docs');
   });
 
